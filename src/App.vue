@@ -32,10 +32,8 @@
       <Loader v-else/>
       <span class="ErrorMes" v-if="!search">Starts searching...</span>
       <span class="ErrorMes" v-if="search && !data.length">{{ error }}</span>
+      <Pagination :page="page" :totalPages="totalPages" :maxCountPage="maxCountPage" @callback="setPage"/>
     </main>
-    <footer>
-      <Pagination v-if="data.length" :page="page" :totalPages="totalPages" :maxCountPage="maxCountPage" @callback="setPage"/>
-    </footer>
   </div>
 </template>
 
@@ -209,7 +207,10 @@ main {
   padding-left: 12px;
   display: flex;
   justify-content: center;
-  margin-bottom: 84px;
+  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 84px;
+  align-items: center;
 
 }
 
@@ -273,10 +274,6 @@ main {
 
   main {
     padding: 20px 12px;
-  }
-
-  footer {
-    padding-bottom: 10px;
   }
 
   .result-searching__count {
