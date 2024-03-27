@@ -15,27 +15,30 @@ export const useFetching = () => {
     const data = ref<Card[]>([])
     const error = ref<Error | null>(null)
     const isLoading = ref<boolean>(false)
+    const resultSearching = ref<string>('')
 
     const fetching = async (search: Ref<string>, page: Ref<number>) => {
         try {
             data.value = []
             isLoading.value = true
             error.value = null
+            resultSearching.value = ''
             const response = await axios.get(API, {
-            params: {
-                s: search.value,
-                page: page.value
-            }
+                params: {
+                    s: search.value,
+                    page: page.value
+                }
             })
+            resultSearching.value = search.value
             if (response.data.Response === 'True') {
-                totalCount.value = Number(response.data.totalResults ?? 0) 
+                totalCount.value = Number(response.data.totalResults ?? 0)
                 data.value = response.data.Search ?? []
             }
             else {
                 error.value = response.data.Error
                 totalCount.value = 0
             }
-            
+
         } catch (e) {
             error.value = new Error('Ошибка при получении данных')
         } finally {
@@ -48,6 +51,7 @@ export const useFetching = () => {
         isLoading,
         data,
         totalCount,
-        error
+        error,
+        resultSearching
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-img">
-            <img :src="card.Poster === 'N/A' ? require('@/assets/img/placeholder-img.png') : card.Poster" alt="placeholder ">
+            <img :class="{'defaulIMG': card.Poster === 'N/A'}" :src="card.Poster === 'N/A' ? require('@/assets/img/placeholder-img.png') : card.Poster" alt="placeholder ">
         </div>
         <div class="card-body">
         <div class="card-body__name">
@@ -21,8 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, toRefs } from 'vue';
-import Cards from './Cards.vue';
+import { toRefs } from 'vue';
 
 interface Card {
     Title: string
@@ -62,11 +61,21 @@ const {card} = toRefs(props)
   display: flex;
 }
 
+
+
 .card-img img{
   object-fit: cover;
   object-position: center;
   width: 100%;
 }
+
+img.defaulIMG {
+  max-width: 245px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
 .card-body {
   padding-left: 13px;
   display: flex;
